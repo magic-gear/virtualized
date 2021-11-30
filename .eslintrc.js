@@ -5,13 +5,19 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ['eslint:recommended', 'prettier'],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
   parserOptions: {
     ecmaVersion: 12,
     ecmaFeatures: {
       jsx: true,
     },
     sourceType: 'module',
+  },
+  plugins: ['react', 'react-hooks'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
   },
   rules: {
     'no-console': 'off',
@@ -32,5 +38,7 @@ module.exports = {
     'no-useless-escape': 'warn',
     'no-case-declarations': 'warn',
     'prefer-const': 'error',
+    'react/prop-types': 'off',
   },
+  parser: 'babel-eslint',
 }

@@ -2,6 +2,7 @@
 
 ##setup
 import style file in app entry
+
 ```
 import '@magic-gear/virtualized/lib/index.less';
 ```
