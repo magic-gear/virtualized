@@ -1,0 +1,341 @@
+@import '~antd/es/style/themes/default';
+@import '~antd/es/style/mixins/index';
+
+@table-prefix-cls: ~'@{ant-prefix}-table';
+@dropdown-prefix-cls: ~'@{ant-prefix}-dropdown';
+@table-header-icon-color: #bfbfbf;
+@table-header-sort-active-bg: darken(@table-header-bg, 3%);
+@table-header-filter-active-bg: darken(@table-header-sort-active-bg, 5%);
+@table-header-sort-active-filter-bg: lighten(@table-header-sort-active-bg, 2%);
+
+:global {
+  .virtualized-wrapper {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .ant-spin-nested-loading, .ant-spin-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1
+    }
+  }
+
+  .v-table-fixed-left {
+    box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
+  }
+
+  .virtualized-table-cell {
+    padding: @table-padding-vertical @table-padding-horizontal;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .ReactVirtualized__Grid,
+  .ReactVirtualized__Table {
+    outline: none;
+    background-color: #fff;
+
+    .@{table-prefix-cls}-selection-column {
+      text-align: center;
+      align-items: stretch;
+      //width: 32px;
+      .ant-radio-wrapper {
+        margin-right: 0;
+      }
+    }
+
+    .@{table-prefix-cls}-selection {
+      text-align: center;
+    }
+  }
+
+  .@{table-prefix-cls} {
+    // ============================ Sorter ============================
+    .ReactVirtualized__Table__headerColumn.@{table-prefix-cls}-column-has-sorters {
+      cursor: pointer;
+      transition: background-color 0.3s;
+      padding: 0;
+
+      &:hover {
+        background: @table-header-sort-active-bg;
+
+        .@{table-prefix-cls}-filter-trigger-container {
+          background: @table-header-sort-active-filter-bg;
+        }
+      }
+    }
+
+    .ReactVirtualized__Table__headerColumn .@{table-prefix-cls}-column-sort {
+      background: @table-header-sort-bg;
+    }
+
+    &-column-sort {
+      background: @table-body-sort-bg;
+    }
+
+    &-column-sorters {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    &-column-sorter {
+      margin-top: 0.15em;
+      margin-bottom: -0.15em;
+      margin-left: @padding-xs;
+      color: @table-header-icon-color;
+
+      &-full {
+        margin-top: -0.2em;
+        margin-bottom: 0;
+      }
+
+      &-inner {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      &-up,
+      &-down {
+        display: inline-block;
+        font-size: 11px;
+
+        &.active {
+          color: @primary-color;
+        }
+      }
+
+      &-down {
+        margin-top: -0.3em;
+      }
+    }
+
+    // ============================ Filter ============================
+    &-filter-column {
+      display: flex;
+      align-items: center;
+      margin: -@table-padding-vertical -@table-padding-horizontal;
+    }
+
+    &-filter-column-title {
+      flex: auto;
+      padding: @table-padding-vertical 2.3em @table-padding-vertical @table-padding-horizontal;
+    }
+
+    &-filter-trigger-container {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex: none;
+      align-items: stretch;
+      align-self: stretch;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &-open,
+      &:hover,
+      .ReactVirtualized__Table__headerColumn .@{table-prefix-cls}-column-has-sorters:hover &:hover {
+        background: @table-header-filter-active-bg;
+      }
+    }
+
+    &-filter-trigger {
+      display: block;
+      width: 2.3em;
+      color: @table-header-icon-color;
+      font-size: @font-size-sm;
+      transition: color 0.3s;
+
+      .@{iconfont-css-prefix} {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .@{table-prefix-cls}-filter-trigger-container-open &,
+      &:hover {
+        color: @text-color-secondary;
+      }
+
+      &.active {
+        color: @primary-color;
+      }
+    }
+
+    // Dropdown
+    &-filter-dropdown {
+      .reset-component;
+
+      // Reset menu
+      .@{dropdown-prefix-cls}-menu {
+        border: 0;
+        box-shadow: none;
+
+        // https://github.com/ant-design/ant-design/issues/4916
+        &-without-submenu {
+          max-height: 400px;
+          overflow-x: hidden;
+        }
+      }
+
+      min-width: 96px;
+      background-color: @white;
+
+      border-radius: @border-radius-base;
+      box-shadow: @box-shadow-base;
+
+      // Checkbox
+      &,
+      &-submenu {
+        .@{ant-prefix}-checkbox-wrapper + span {
+          padding-left: 8px;
+
+          .@{ant-prefix}-dropdown-rtl & {
+            padding-right: 8px;
+            padding-left: 0;
+          }
+        }
+      }
+
+      // Operation
+      &-btns {
+        display: flex;
+        justify-content: space-between;
+        padding: 7px 8px;
+        overflow: hidden;
+        background-color: inherit;
+        border-top: @border-width-base @border-style-base @border-color-split;
+      }
+    }
+
+    &-empty {
+      .ReactVirtualized__Table__Grid {
+        display: none;
+      }
+    }
+
+    &-bordered {
+      .ReactVirtualized__Grid__innerScrollContainer {
+        border: @border-width-base @border-style-base @border-color-split;
+        border-bottom: none;
+      }
+
+      &.@{table-prefix-cls}-empty {
+        .@{table-prefix-cls}-placeholder {
+          border-left: @border-width-base @border-style-base @border-color-split;
+          border-right: @border-width-base @border-style-base @border-color-split;
+        }
+      }
+
+      .ReactVirtualized__Table__headerColumn,
+      .grid-cell {
+        border-right: @border-width-base @border-style-base @border-color-split;
+      }
+    }
+
+    .ReactVirtualized__Table__headerRow {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border-bottom: @border-width-base @border-style-base @border-color-split;
+      background: #fafafa;
+    }
+
+    .header-grid {
+      width: 100%;
+      background: #fafafa;
+      border-bottom: @border-width-base @border-style-base @border-color-split;
+
+      .ReactVirtualized__Grid {
+        background: #fafafa;
+      }
+    }
+
+    .ReactVirtualized__Table__headerColumn {
+      position: relative;
+      transition: background 0.3s ease;
+      color: @table-header-color;
+      font-weight: 500;
+      padding: @table-padding-vertical @table-padding-horizontal;
+      white-space: nowrap;
+      word-break: normal;
+      background: #fafafa;
+
+      &[colspan] {
+        text-align: center;
+      }
+    }
+
+    .grid-cell {
+      &.border-cell {
+        border-right: @border-width-base @border-style-base @border-color-split;
+      }
+
+      border-bottom: @border-width-base @border-style-base @border-color-split;
+
+      &.grid-cell-hovered {
+        background: @table-row-hover-bg;
+      }
+
+      &.grid-cell-selected {
+        background: @table-row-hover-bg;
+      }
+
+      &.@{table-prefix-cls}-column-sort {
+        background: @table-header-sort-bg;
+      }
+
+      &.@{table-prefix-cls}-column-sort {
+        background: @table-body-sort-bg;
+      }
+    }
+
+    .ReactVirtualized__Table__row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      min-width: 100%;
+      transition: background-color 0.3s;
+      border-bottom: @border-width-base @border-style-base @border-color-split;
+      background: #fff;
+
+      &:hover {
+        .virtualized-table-cell {
+          background: @table-row-hover-bg;
+        }
+      }
+
+      .@{table-prefix-cls}-row-selected {
+        background: @table-selected-row-bg;
+      }
+
+      .@{table-prefix-cls}-column-sort.virtualized-table-cell {
+        background: @table-header-sort-bg;
+      }
+
+      .@{table-prefix-cls}-column-sort.virtualized-table-cell {
+        background: @table-body-sort-bg;
+      }
+    }
+
+    .ReactVirtualized__Table__rowColumn {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      min-height: 100%;
+    }
+  }
+}
+
+@import './size';

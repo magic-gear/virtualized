@@ -1,0 +1,32 @@
+{
+  "name": "@magic-gear/virtualized",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development webpack --watch",
+    "build": "cross-env NODE_ENV=production webpack",
+    "format": "prettier --write .",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magic-gear/virtualized.git"
+  },
+  "dependencies": {
+    "classnames": "^2.3.1",
+    "react-virtualized": "^9.22.3",
+    "shallowequal": "^1.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.2.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.2.1"
+  },
+  "peerDependencies": {
+    "antd": ">4.0.0",
+    "react": "^15.3.0 || ^16.0.0-alpha || ^17.0.1",
+    "react-dom": "^15.3.0 || ^16.0.0-alpha || ^17.0.1"
+  }
+}
