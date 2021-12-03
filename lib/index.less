@@ -227,10 +227,8 @@
     }
 
     &-bordered {
-      .ReactVirtualized__Grid__innerScrollContainer {
-        border: @border-width-base @border-style-base @border-color-split;
-        border-bottom: none;
-      }
+      border: @border-width-base @border-style-base @border-color-split;
+      border-bottom: none;
 
       &.@{table-prefix-cls}-empty {
         .@{table-prefix-cls}-placeholder {
@@ -240,7 +238,7 @@
       }
 
       .ReactVirtualized__Table__headerColumn,
-      .grid-cell {
+      .ReactVirtualized__Table__rowColumn {
         border-right: @border-width-base @border-style-base @border-color-split;
       }
     }
