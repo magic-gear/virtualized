@@ -18,6 +18,9 @@
     "shallowequal": "^1.1.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-class-properties": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
     "antd": "^4.17.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.18.0",
