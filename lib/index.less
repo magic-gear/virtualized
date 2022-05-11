@@ -226,20 +226,28 @@
       }
     }
 
-    &-bordered.virtualized-wrapper {
-      border: @border-width-base @border-style-base @border-color-split;
-      border-bottom: none;
-
-      &.@{table-prefix-cls}-empty {
-        .@{table-prefix-cls}-placeholder {
-          border-left: @border-width-base @border-style-base @border-color-split;
-          border-right: @border-width-base @border-style-base @border-color-split;
-        }
+    &-bordered {
+      // move border to child because padding may apply on top level, which cause weird style
+      & > div {
+        border: @border-width-base @border-style-base @border-color-split;
+        border-bottom: none;
       }
 
+      .grid-cell,
       .ReactVirtualized__Table__headerColumn,
       .ReactVirtualized__Table__rowColumn {
         border-right: @border-width-base @border-style-base @border-color-split;
+      }
+      .ReactVirtualized__Table__headerRow .ReactVirtualized__Table__headerColumn,
+      .ReactVirtualized__Table__row .ReactVirtualized__Table__rowColumn {
+        &:last-child {border-right: 0}
+      }
+      .grid-cell-last {
+        border-right: 0;
+      }
+
+      .@{table-prefix-cls}-footer {
+        border-bottom: @border-width-base @border-style-base @border-color-split;
       }
     }
 
@@ -328,6 +336,7 @@
       }
     }
 
+    .ReactVirtualized__Table__headerColumn,
     .ReactVirtualized__Table__rowColumn {
       display: flex;
       flex-direction: column;
